@@ -1,6 +1,6 @@
 package com.example.mvvmstarterproject.base
 
-import com.ahmoneam.basecleanarchitecture.base.data.model.BaseResponse
+import com.example.mvvmstarterproject.utils.network.BaseResponse
 import com.example.mvvmstarterproject.R
 import com.example.mvvmstarterproject.utils.ConnectivityUtils
 import com.example.mvvmstarterproject.utils.network.ApplicationException

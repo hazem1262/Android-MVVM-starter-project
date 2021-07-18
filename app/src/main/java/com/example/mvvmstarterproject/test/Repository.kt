@@ -1,4 +1,4 @@
-package io.github.philippeboisney.githubapp.model
+package com.example.mvvmstarterproject.test
 
 import com.google.gson.annotations.SerializedName
 

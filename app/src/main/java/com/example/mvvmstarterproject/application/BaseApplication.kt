@@ -2,30 +2,17 @@ package com.example.mvvmstarterproject.application
 
 import android.app.Application
 import com.example.mvvmstarterproject.BuildConfig
-import com.example.mvvmstarterproject.di.DaggerAppComponent
 import com.example.mvvmstarterproject.utils.ReleaseTree
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
-import javax.inject.Inject
 
+@HiltAndroidApp
+class BaseApplication : Application() {
 
-class BaseApplication : Application(), HasAndroidInjector {
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent
-            .builder()
-            .application(this)
-            .context(this)
-            .build()
-            .inject(this)
 
         if (BuildConfig.DEBUG) {
             Logger.addLogAdapter(AndroidLogAdapter())

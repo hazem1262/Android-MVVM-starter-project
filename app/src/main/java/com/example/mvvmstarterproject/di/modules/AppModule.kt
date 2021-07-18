@@ -1,14 +1,17 @@
 package com.example.mvvmstarterproject.di.modules
 
 import android.content.Context
-import android.os.Build
 import com.example.mvvmstarterproject.BuildConfig
 import com.example.mvvmstarterproject.utils.ConnectivityUtils
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class])
+@Module
+@InstallIn(SingletonComponent::class)
 class AppModule {
 
     @Provides
@@ -19,6 +22,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideConnectivityUtils(context: Context): ConnectivityUtils = ConnectivityUtils(context)
+    fun provideConnectivityUtils(@ApplicationContext context: Context): ConnectivityUtils = ConnectivityUtils(context)
 
 }

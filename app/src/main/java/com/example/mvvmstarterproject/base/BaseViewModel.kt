@@ -11,8 +11,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.lang.UnsupportedOperationException
+import javax.inject.Inject
 
-open class BaseViewModel: ViewModel() {
+open class BaseViewModel @Inject constructor(): ViewModel() {
     val error = MutableLiveData<Event<Result.Error>>()
     val loading =
         MutableLiveData<Event<Result.Loading>>().apply { value = Event(Result.Loading(false)) }
@@ -41,6 +43,7 @@ open class BaseViewModel: ViewModel() {
             is Result.Error -> {
                 throw result.exception
             }
+            else -> throw UnsupportedOperationException()
         }
     }
 

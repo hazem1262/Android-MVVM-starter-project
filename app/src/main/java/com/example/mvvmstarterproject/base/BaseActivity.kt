@@ -2,43 +2,24 @@ package com.example.mvvmstarterproject.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.example.mvvmstarterproject.di.viewmodels.ViewModelFactory
 import com.example.mvvmstarterproject.utils.EventObserver
 import com.example.mvvmstarterproject.utils.MessageUtils
 import com.example.mvvmstarterproject.utils.network.LoadingHandler
 import com.example.mvvmstarterproject.utils.network.Result
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import java.lang.reflect.ParameterizedType
-import javax.inject.Inject
 
-open class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity() , HasAndroidInjector {
+abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity() {
 
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var loadingHandler: LoadingHandler
 
-    lateinit var viewModel:ViewModel
+    abstract val viewModel:ViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(viewModelClass())
         loadingHandler = LoadingHandler.getInstance(this)
         initLoading()
         initError()
     }
-    @Suppress("UNCHECKED_CAST")
-    private fun viewModelClass(): Class<ViewModel> {
-        // dirty hack to get generic type https://stackoverflow.com/a/1901275/719212
-        return ((javaClass.genericSuperclass as ParameterizedType)
-            .actualTypeArguments[0] as Class<ViewModel>)
-    }
+
     private fun initError() {
         viewModel.error.observe(this, EventObserver {
             hideLoading()
@@ -63,6 +44,7 @@ open class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity() , HasAn
             else hideLoading()
         })
     }
+
     open fun hideLoading() {
         loadingHandler.hideLoading()
     }
@@ -70,5 +52,4 @@ open class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity() , HasAn
     open fun showLoading() {
         loadingHandler.showLoading()
     }
-    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 }

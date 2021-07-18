@@ -1,48 +1,27 @@
 package com.example.mvvmstarterproject.base
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
-import com.example.mvvmstarterproject.di.viewmodels.ViewModelFactory
 import com.example.mvvmstarterproject.utils.EventObserver
 import com.example.mvvmstarterproject.utils.MessageUtils
 import com.example.mvvmstarterproject.utils.network.LoadingHandler
 import com.example.mvvmstarterproject.utils.network.Result
-import dagger.android.support.AndroidSupportInjection
-import java.lang.reflect.ParameterizedType
-import javax.inject.Inject
 
-open class BaseFragment<ViewModel : BaseViewModel> : Fragment() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment() {
 
-    lateinit var viewModel:ViewModel
+    abstract val viewModel:ViewModel
     private lateinit var loadingHandler: LoadingHandler
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(getLifeCycleOwner(), viewModelFactory).get(viewModelClass())
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         loadingHandler = LoadingHandler.getInstance(requireActivity())
         initLoading()
         initError()
     }
-    open fun getLifeCycleOwner(): ViewModelStoreOwner {
-        return this
-    }
-    @Suppress("UNCHECKED_CAST")
-    private fun viewModelClass(): Class<ViewModel> {
-        // dirty hack to get generic type https://stackoverflow.com/a/1901275/719212
-        return ((javaClass.genericSuperclass as ParameterizedType)
-            .actualTypeArguments[0] as Class<ViewModel>)
-    }
+
     private fun initError() {
         viewModel.error.observe(viewLifecycleOwner, EventObserver {
             hideLoading()
@@ -75,12 +54,10 @@ open class BaseFragment<ViewModel : BaseViewModel> : Fragment() {
         hideKeyboard()
         loadingHandler.showLoading()
     }
+
     fun hideKeyboard() {
         val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
+
 }

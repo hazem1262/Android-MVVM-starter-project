@@ -5,7 +5,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
-
 class ConnectivityUtils constructor(private val context: Context) {
     @Suppress("DEPRECATION")
     val isNetworkConnected: Boolean

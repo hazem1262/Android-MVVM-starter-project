@@ -2,20 +2,20 @@ package com.example.mvvmstarterproject.test
 
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.activity.viewModels
 import com.example.mvvmstarterproject.R
 import com.example.mvvmstarterproject.base.BaseActivity
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<MainViewModel>() {
 
     @Inject
     lateinit var testDagger:String
+
+    override val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
