@@ -39,6 +39,10 @@ data class User(
             @SerializedName("lng")
             val lng: String?
         )
+        val addressString:String
+        get() {
+            return "$city, $street"
+        }
     }
 
     data class Company(
