@@ -1,10 +1,11 @@
-package com.example.mvvmstarterproject.test
+package com.example.mvvmstarterproject.ui.main
 
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import com.example.mvvmstarterproject.R
 import com.example.mvvmstarterproject.base.BaseActivity
+import com.example.mvvmstarterproject.ui.main.users.UsersFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
     private fun initFragment() {
-        val testFragmentA = TestFragmentA.newInstance()
+        val testFragmentA = UsersFragment.newInstance()
         supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, testFragmentA).commit()
     }
 

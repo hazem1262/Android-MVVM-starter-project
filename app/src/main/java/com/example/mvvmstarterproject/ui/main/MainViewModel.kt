@@ -1,4 +1,4 @@
-package com.example.mvvmstarterproject.test
+package com.example.mvvmstarterproject.ui.main
 
 import android.util.Log
 import com.example.mvvmstarterproject.base.BaseViewModel

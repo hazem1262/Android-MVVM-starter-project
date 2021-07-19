@@ -1,7 +1,7 @@
 package com.example.mvvmstarterproject.di.modules
 
 import com.example.mvvmstarterproject.BuildConfig
-import com.example.mvvmstarterproject.test.UserService
+import com.example.mvvmstarterproject.data.users.remote.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.example.mvvmstarterproject.test
+package com.example.mvvmstarterproject.data.users.remote
 
 
 import com.google.gson.annotations.SerializedName

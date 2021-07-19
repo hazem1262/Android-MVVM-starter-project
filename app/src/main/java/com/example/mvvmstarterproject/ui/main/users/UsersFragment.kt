@@ -1,11 +1,10 @@
-package com.example.mvvmstarterproject.test
+package com.example.mvvmstarterproject.ui.main.users
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.mvvmstarterproject.R
@@ -14,11 +13,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.test_fragment_a.*
 
 @AndroidEntryPoint
-class TestFragmentA : BaseFragment<TestViewModelA>() {
+class UsersFragment : BaseFragment<UsersViewModel>() {
 
-    override val viewModel: TestViewModelA by viewModels()
+    override val viewModel: UsersViewModel by viewModels()
     companion object {
-        fun newInstance() = TestFragmentA()
+        fun newInstance() = UsersFragment()
     }
 
     override fun onCreateView(
